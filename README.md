@@ -226,12 +226,25 @@ spec:
 
 ```bash
 kubectl apply -f ingress.yaml
+ingress.networking.k8s.io/course-app-ingress configured
 ```
 
 Перевірка:
 
 ```bash
-curl -k -H "Host: course-app.local" https://localhost/healthz
+Перевірка HTTPS виконувалась через `port-forward`, оскільки у kind/Codespaces порт `443` напряму не відкритий.
+
+У першому терміналі:
+
+```bash
+kubectl port-forward -n ingress-nginx service/ingress-nginx-controller 8443:443
+```
+
+В іншому терміналі:
+
+```bash
+curl -k -H "Host: course-app.local" https://localhost:8443/healthz
+{"status":"ok"}
 ```
 
 ---
